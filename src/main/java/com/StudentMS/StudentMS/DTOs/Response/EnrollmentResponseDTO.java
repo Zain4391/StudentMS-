@@ -1,5 +1,7 @@
 package com.StudentMS.StudentMS.DTOs.Response;
 
+import java.time.LocalDate;
+
 import com.StudentMS.StudentMS.DTOs.Summary.CourseSummaryDTO;
 import com.StudentMS.StudentMS.DTOs.Summary.StudentSummaryDTO;
 import com.StudentMS.StudentMS.enums.Grade;
@@ -17,4 +19,5 @@ public class EnrollmentResponseDTO {
     private StudentSummaryDTO student;
     private CourseSummaryDTO course;
     private Grade grade;
+    private LocalDate enrollmentDate;
 }
