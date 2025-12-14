@@ -61,7 +61,7 @@ public class StudentMapper {
         return dto;
     }
 
-    public void updateEntityFromRequest(Student student, StudentResponseDTO dto) {
+    public void updateEntityFromRequest(Student student, StudentRequestDTO dto) {
         
         if(student == null || dto == null) {
             return;
@@ -75,12 +75,9 @@ public class StudentMapper {
             student.setEmail(dto.getEmail());
         }
 
-        if(dto.getRole() != null) {
-            student.setRole(dto.getRole());
+        if(dto.getMajor() != null) {
+            student.setMajor(dto.getMajor());
         }
 
-        if(dto.getEnrollmentDate() != null) {
-            student.setEnrollmentDate(dto.getEnrollmentDate());
-        }
     }
 }
