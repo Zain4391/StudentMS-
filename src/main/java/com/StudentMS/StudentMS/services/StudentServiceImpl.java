@@ -2,6 +2,7 @@ package com.StudentMS.StudentMS.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class StudentServiceImpl implements StudentService{
+
+    private final PasswordEncoder passwordEncoder;
     
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
@@ -41,7 +44,7 @@ public class StudentServiceImpl implements StudentService{
         student.setRole(Roles.STUDENT);
         
         // 4. Hash the password (for now just set it, we'll add BCrypt later)
-        // student.setPassword(passwordEncoder.encode(requestDTO.getPassword()));
+        student.setPassword(passwordEncoder.encode(requestDTO.getPassword()));
 
         // 5. Save to repository
         Student savedStudent = studentRepository.save(student);

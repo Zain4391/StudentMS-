@@ -2,6 +2,7 @@ package com.StudentMS.StudentMS.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ public class TeacherServiceImpl implements TeacherService{
     
     private final TeacherRepository teacherRepository;
     private final TeacherMapper teacherMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public TeacherResponseDTO createTeacher(TeacherRequestDTO requestDTO) {
@@ -35,6 +37,8 @@ public class TeacherServiceImpl implements TeacherService{
 
         Teacher teacher = teacherMapper.toEntity(requestDTO);
         teacher.setRole(Roles.TEACHER);
+
+        teacher.setPassword(passwordEncoder.encode(requestDTO.getPassword()));
 
         Teacher savedTeacher = teacherRepository.save(teacher);
 

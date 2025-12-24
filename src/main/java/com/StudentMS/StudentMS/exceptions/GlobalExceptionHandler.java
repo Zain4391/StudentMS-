@@ -64,9 +64,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<ErrorResponseDTO> handleUnauthorizedException(
-        UnauthorizedException ex, 
+        UnauthorizedException ex,
         WebRequest request) {
-    
+
         ErrorResponseDTO errorResponse = new ErrorResponseDTO(
             LocalDateTime.now(),
             HttpStatus.UNAUTHORIZED.value(),
@@ -74,7 +74,23 @@ public class GlobalExceptionHandler {
             ex.getMessage(),
             request.getDescription(false).replace("uri=", "")
         );
-    
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(JwtAuthenticationException.class)
+    public ResponseEntity<ErrorResponseDTO> handleJwtAuthenticationException(
+        JwtAuthenticationException ex,
+        WebRequest request) {
+
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO(
+            LocalDateTime.now(),
+            HttpStatus.UNAUTHORIZED.value(),
+            HttpStatus.UNAUTHORIZED.getReasonPhrase(),
+            ex.getMessage(),
+            request.getDescription(false).replace("uri=", "")
+        );
+
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
