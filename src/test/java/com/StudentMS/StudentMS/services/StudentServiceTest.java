@@ -72,7 +72,7 @@ public class StudentServiceTest {
         assertEquals("johnDoe@example.com", result.getEmail());
         verify(studentRepository, times(1)).save(any());
 
-        //reporter.publishEntry("Status", "PASSED");
+        reporter.publishEntry("Status", "PASSED");
     }
 
 }
