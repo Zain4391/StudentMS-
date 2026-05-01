@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping("/api/students")
 @RequiredArgsConstructor
@@ -19,8 +21,15 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping
-    public ResponseEntity<StudentResponseDTO> createStudent(@Valid @RequestBody StudentRequestDTO studentRequestDTO) {
-        return new ResponseEntity<>(studentService.createStudent(studentRequestDTO), HttpStatus.CREATED);
+    public ResponseEntity<StudentResponseDTO> createStudent(
+            @Valid @RequestBody StudentRequestDTO studentRequestDTO) {
+        return new ResponseEntity<>(studentService.createStudent(studentRequestDTO),
+                HttpStatus.CREATED);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<StudentResponseDTO> getCurrentStudent(Principal principal) {
+        return ResponseEntity.ok(studentService.getStudentByEmail(principal.getName()));
     }
 
     @GetMapping("/{id}")
@@ -34,7 +43,8 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StudentResponseDTO> updateStudent(@PathVariable Long id, @Valid @RequestBody StudentRequestDTO studentRequestDTO) {
+    public ResponseEntity<StudentResponseDTO> updateStudent(@PathVariable Long id,
+            @Valid @RequestBody StudentRequestDTO studentRequestDTO) {
         return ResponseEntity.ok(studentService.updateStudent(id, studentRequestDTO));
     }
 
@@ -50,7 +60,8 @@ public class StudentController {
     }
 
     @GetMapping("/major/{major}")
-    public ResponseEntity<Page<StudentResponseDTO>> getStudentsByMajor(@PathVariable String major, Pageable pageable) {
+    public ResponseEntity<Page<StudentResponseDTO>> getStudentsByMajor(@PathVariable String major,
+            Pageable pageable) {
         return ResponseEntity.ok(studentService.getStudentsByMajor(major, pageable));
     }
 }

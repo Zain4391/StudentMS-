@@ -36,6 +36,8 @@ public class SecurityConfig {
                     // Student endpoints
                     .requestMatchers(HttpMethod.POST, "/api/students")
                     .permitAll() // Allow registration
+                    .requestMatchers(HttpMethod.GET, "/api/students/me")
+                    .hasRole("STUDENT")
                     .requestMatchers(HttpMethod.GET, "/api/students/**")
                     .hasAnyRole("ADMIN", "TEACHER")
                     .requestMatchers(HttpMethod.PUT, "/api/students/**")
